@@ -132,7 +132,7 @@
       <!-- By default, in-order cores do not have load buffers -->
       <param name="load_buffer_size" value="0"/>
       <!-- number of ports refer to sustain-able concurrent memory accesses -->
-      <param name="memory_ports" value="1"/>
+      <param name="memory_ports" value="2"/>
       <!-- max_allowed_in_flight_memo_instructions determines the # of ports of load and store buffer
       as well as the ports of Dcache which is connected to LSU -->
       <!-- dual-pumped Dcache can be used to save the extra read/write ports -->
@@ -563,7 +563,7 @@
     </component>
     <!--**********************************************************************-->
     <component id="system.NoC0" name="noc0">
-      <param name="clockrate" value="3400"/>
+      <param name="clockrate" value="config.system.cpu_clk_domain.clock.0"/>
       <param name="vdd" value="0"/>
       <!-- 0 means using ITRS default vdd -->
       <param name="power_gating_vcc" value="-1"/>

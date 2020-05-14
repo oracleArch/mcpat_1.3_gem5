@@ -6,7 +6,7 @@ from xml.dom import minidom
 import copy
 import types
 
-bench_path = "/scratch/mhuang_lab/ashar36/dla2/sim/debug_10m_rzheng/MinorCPU/0/0/hetero_power9smt4_TAGE_SC_L_64KB/astar/"
+bench_path = "/scratch/mhuang_lab/ashar36/dla2/sim/debug_10m_rzheng/MinorCPU/0/0/hetero_power9smt4_TAGE_SC_L_64KB/bwaves/"
 
 mcpat_template = "alpha_template.xml"
 
@@ -312,7 +312,8 @@ def dumpMcpatTemplate (path):
             if 'config' not in expr and 'stats' not in expr:
                 stat.attrib['value'] = str(eval(expr))
 
-    templateMcpat.write(path + '/m5out/mcpat_new2.xml')
+    output_template = path + '/m5out/mcpat.xml'
+    templateMcpat.write(output_template)
 
 def start (path):
     readgem5Config(path)
