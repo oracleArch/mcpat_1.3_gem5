@@ -110,7 +110,7 @@ def prepareTemplate (path):
         if child.attrib.get("name") == "number_of_L2s":
             child.attrib['value'] = str(numL2)
         if child.attrib.get("name") == "Private_L2":
-            child.attrib['value'] = str(sharedL2)
+            child.attrib['value'] = "0" if sharedL2 else "1"
         temp = child.attrib.get('value')
 
         # to consider all the cpus in total cycle calculation
@@ -312,7 +312,7 @@ def dumpMcpatTemplate (path):
             if 'config' not in expr and 'stats' not in expr:
                 stat.attrib['value'] = str(eval(expr))
 
-    templateMcpat.write(path + '/m5out/mcpat_new.xml')
+    templateMcpat.write(path + '/m5out/mcpat_new2.xml')
 
 def start (path):
     readgem5Config(path)

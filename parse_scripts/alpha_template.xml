@@ -542,8 +542,8 @@
 
     <!--**********************************************************************-->
     <component id="system.L30" name="L30">
-      <param name="L3_config" value="config.system.l3.tags.size,config.system.l3.tags.block_size,config.system.l3.tags.assoc, 16, config.system.l3.response_latency, 100,1"/>
-      <!-- the parameters are capacity,block_width, associativity,bank, throughput w.r.t. core clock, latency w.r.t. core clock,-->
+      <param name="L3_config" value="config.system.l3.tags.size,config.system.l3.tags.block_size,config.system.l3.tags.assoc, 1, 1, config.system.l3.response_latency, config.system.l3.tags.block_size,1"/>
+      <!-- the parameters are capacity,block_width, associativity,bank, throughput w.r.t. core clock, latency w.r.t. core clock,output_width, cache policy-->
       <param name="clockrate" value="config.system.cpu_clk_domain.clock.0"/>
       <param name="ports" value="1,1,1"/>
       <!-- number of r, w, and rw ports -->
@@ -567,6 +567,7 @@
       <param name="vdd" value="0"/>
       <!-- 0 means using ITRS default vdd -->
       <param name="power_gating_vcc" value="-1"/>
+      <param name="topology" value="bus"/>
       <!-- "-1" means using default power gating virtual power supply voltage constrained by technology and computed automatically -->
       <param name="type" value="0"/>
       <!--0:bus, 1:NoC , for bus no matter how many nodes sharing the bus
