@@ -6,16 +6,16 @@ from xml.dom import minidom
 import copy
 import types
 
-bench_path = "/scratch/mhuang_lab/ashar36/dla2/sim/debug_10m_rzheng/HeteroSoC/0/0/hetero_small_power9smt4_TAGE_SC_L_64KB/gobmk/"
+bench_path = "/scratch/mhuang_lab/ashar36/dla2/sim/debug_10m_rzheng/HeteroSoC/0/0/hetero_prime_power9smt4_TAGE_SC_L_64KB/gobmk/"
 
 # The input mcpat template
-mcpat_template = "inorder_template.xml"
+mcpat_template = "o3_template.xml"
 
 # Manually set the number of Cores
 Manual = True
-numInorder = 1#0
-numO3 = 0#1
-gem5_O3_index = 1
+numInorder = 0#1
+numO3 = 1#0#1
+gem5_O3_start_index = 1
 numCores = numInorder + numO3
 
 # Don't replace cpus_name for
@@ -89,7 +89,7 @@ def readMcpatTemplate (path):
 
 def prepareTemplate (path):
     global numCores
-    global gem5_O3_index
+    global gem5_O3_start_index
 
     if not Manual :
         numCores = len(config["system"][cpus_name])
@@ -115,7 +115,7 @@ def prepareTemplate (path):
             elif config["system"][cpus_name][coreCounter]["type"] == "DerivO3CPU":
                 num_o3 += 1
 
-        gem5_O3_index = num_inorder
+        gem5_O3_start_index = num_inorder
     else:
         num_inorder = numInorder
         num_o3 = numO3
@@ -206,27 +206,27 @@ def prepareTemplate (path):
                         childId = childId.replace("O3core", "core" + str(coreCounter))
                     if isinstance(childValue, basestring) and "cpu." in childValue and "stats" in childValue.split('.')[0]:
                         if "cpu.branchPred." in childValue or "cpu.dcache." in childValue or "cpu.icache." in childValue or "cpu.workload." in childValue:
-                            childValue = childValue.replace("cpu." , "cpu" + str(gem5_O3_index)+ ".")
+                            childValue = childValue.replace("cpu." , "cpu" + str(gem5_O3_start_index)+ ".")
                         else:
-                            childValue = childValue.replace("cpu." , cpus_name + str(gem5_O3_index)+ ".")
+                            childValue = childValue.replace("cpu." , cpus_name + str(gem5_O3_start_index)+ ".")
                     if isinstance(childValue, basestring) and "cpu." in childValue and "config" in childValue.split('.')[0]:
-                        if "cpu.branchPred." in childValue or "cpu.dcache." in childValue or "cpu.icache." in childValue or "cpu.workload." in childValue:
-                            childValue = childValue.replace("cpu." , "cpu."+ str(gem5_O3_index)+ ".")
+                        if "cpu.branchPred." in childValue or "cpu.dcache." in childValue or "cpu.icache." in childValue or "cpu.workload." in childValue or "cpu.cpu_clk_domain" in childValue or "cpu.cpu_voltage_domain" in childValue:
+                            childValue = childValue.replace("cpu." , "cpu."+ str(gem5_O3_start_index)+ ".")
                         else:
-                            childValue = childValue.replace("cpu." , cpus_name + "."+ str(gem5_O3_index)+ ".")
+                            childValue = childValue.replace("cpu." , cpus_name + "."+ str(gem5_O3_start_index)+ ".")
                     if len(list(coreChild)) is not 0:
                         for level2Child in coreChild:
                             level2ChildValue = level2Child.attrib.get("value")
                             if isinstance(level2ChildValue, basestring) and "cpu." in level2ChildValue and "stats" in level2ChildValue.split('.')[0]:
                                 if "cpu.branchPred." in level2ChildValue or "cpu.dcache." in level2ChildValue or "cpu.icache." in level2ChildValue or "cpu.workload." in level2ChildValue:
-                                    level2ChildValue = level2ChildValue.replace("cpu." , "cpu" + str(gem5_O3_index)+ ".")
+                                    level2ChildValue = level2ChildValue.replace("cpu." , "cpu" + str(gem5_O3_start_index)+ ".")
                                 else:
-                                    level2ChildValue = level2ChildValue.replace("cpu." , cpus_name + str(gem5_O3_index)+ ".")
+                                    level2ChildValue = level2ChildValue.replace("cpu." , cpus_name + str(gem5_O3_start_index)+ ".")
                             if isinstance(level2ChildValue, basestring) and "cpu." in level2ChildValue and "config" in level2ChildValue.split('.')[0]:
-                                if "cpu.branchPred." in level2ChildValue or "cpu.dcache." in level2ChildValue or "cpu.icache." in level2ChildValue or "cpu.workload." in level2ChildValue:
-                                    level2ChildValue = level2ChildValue.replace("cpu." , "cpu." + str(gem5_O3_index)+ ".")
+                                if "cpu.branchPred." in level2ChildValue or "cpu.dcache." in level2ChildValue or "cpu.icache." in level2ChildValue or "cpu.workload." in level2ChildValue or "cpu.cpu_clk_domain" in level2ChildValue or "cpu.cpu_voltage_domain" in level2ChildValue:
+                                    level2ChildValue = level2ChildValue.replace("cpu." , "cpu." + str(gem5_O3_start_index)+ ".")
                                 else:
-                                    level2ChildValue = level2ChildValue.replace("cpu." , cpus_name + "." + str(gem5_O3_index)+ ".")
+                                    level2ChildValue = level2ChildValue.replace("cpu." , cpus_name + "." + str(gem5_O3_start_index)+ ".")
                             level2Child.attrib["value"] = level2ChildValue
                     
                     if isinstance(childId, basestring):
@@ -237,7 +237,7 @@ def prepareTemplate (path):
                 root[0][0].insert(elemCounter, coreElem)
                 coreElem = copy.deepcopy(coreElemCopy)
                 elemCounter += 1
-                gem5_O3_index += 1
+                gem5_O3_start_index += 1
             
             root[0][0].remove(child)
             elemCounter -= 1

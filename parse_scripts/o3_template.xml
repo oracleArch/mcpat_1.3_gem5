@@ -50,8 +50,8 @@
     <!-- *********************** cores ******************* -->
     <component id="system.O3core" name="O3core">
       <!-- Core property -->
-      <param name="clock_rate" value="1e-6 / config.system.cpu_clk_domain.clock.0 * 1e12"/>
-      <param name="vdd" value="config.system.cpu_voltage_domain.voltage.0"/>
+      <param name="clock_rate" value="1e-6 / config.system.cpu.cpu_clk_domain.clock.0 * 1e12"/>
+      <param name="vdd" value="config.system.cpu.cpu_voltage_domain.voltage.0"/>
       <!-- 0 means using ITRS default vdd -->
       <param name="power_gating_vcc" value="-1"/>
       <!-- "-1" means using default power gating virtual power supply voltage constrained by technology and computed automatically -->
@@ -79,7 +79,7 @@
       as in the complexity effective processors paper; issue_width==dispatch_width -->
       <param name="commit_width" value="config.system.cpu.commitWidth"/>
       <!-- commit_width determines the number of ports of register files -->
-      <param name="fp_issue_width" value="2"/>
+      <param name="fp_issue_width" value="config.system.cpu.issueWidth"/>
       <param name="prediction_width" value="1"/>
       <!-- number of branch instructions can be predicted simultaneously-->
       <!-- Current version of McPAT does not distinguish int and floating point pipelines 
@@ -222,7 +222,7 @@
         <!-- branch predictor; tournament predictor see Alpha implementation -->
         <param name="local_predictor_size" value="10,3"/>
         <param name="local_predictor_entries" value="1024"/>
-        <param name="global_predictor_entries" value="4096"/>
+        <param name="global_predictor_entries" value="config.system.cpu.branchPred.tage.histBufferSize"/>
         <param name="global_predictor_bits" value="2"/>
         <param name="chooser_predictor_entries" value="4096"/>
         <param name="chooser_predictor_bits" value="2"/>
