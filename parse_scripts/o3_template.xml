@@ -50,7 +50,7 @@
     <!-- *********************** cores ******************* -->
     <component id="system.O3core" name="O3core">
       <!-- Core property -->
-      <param name="clock_rate" value="1e-6 / config.system.cpu.cpu_clk_domain.clock.0 * 1e12"/>
+      <param name="clock_rate" value="1e-6 / config.system.cpu.clk_domain.clock.0 * 1e12"/>
       <param name="vdd" value="config.system.cpu.cpu_voltage_domain.voltage.0"/>
       <!-- 0 means using ITRS default vdd -->
       <param name="power_gating_vcc" value="-1"/>
@@ -95,9 +95,9 @@
       <!-- For MUL and Div -->
       <param name="FPU_per_core" value="config.system.cpu.fuPool.FUList.0.count + config.system.cpu.fuPool.FUList.1.count"/>
       <!-- buffer between IF and ID stage -->
-      <param name="instruction_buffer_size" value="config.system.cpu.fetchBufferSize"/>
+      <param name="instruction_buffer_size" value="config.system.cpu.fetchQueueSize"/>
       <!-- buffer between ID and sche/exe stage -->
-      <param name="decoded_stream_buffer_size" value="config.system.cpu.fetchBufferSize"/>
+      <param name="decoded_stream_buffer_size" value="config.system.cpu.fetchQueueSize"/>
       <param name="instruction_window_scheme" value="0"/>
       <!-- 0 PHYREG based, 1 RSBASED-->
       <!-- McPAT support 2 types of OoO cores, RS based and physical reg based-->
@@ -127,7 +127,7 @@
       no register windowing is used when this number is 0 -->
       <!-- In OoO cores, loads and stores can be issued whether inorder(Pentium Pro) or (OoO)out-of-order(Alpha),
       They will always try to execute out-of-order though. -->
-      <param name="LSU_order" value="inorder"/>
+      <param name="LSU_order" value="out-of-order"/>
       <param name="store_buffer_size" value="config.system.cpu.SQEntries"/>
       <!-- By default, in-order cores do not have load buffers -->
       <param name="load_buffer_size" value="config.system.cpu.LQEntries"/>

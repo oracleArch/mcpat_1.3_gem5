@@ -210,7 +210,7 @@ def prepareTemplate (path):
                         else:
                             childValue = childValue.replace("cpu." , cpus_name + str(gem5_O3_start_index)+ ".")
                     if isinstance(childValue, basestring) and "cpu." in childValue and "config" in childValue.split('.')[0]:
-                        if "cpu.branchPred." in childValue or "cpu.dcache." in childValue or "cpu.icache." in childValue or "cpu.workload." in childValue or "cpu.cpu_clk_domain" in childValue or "cpu.cpu_voltage_domain" in childValue:
+                        if "cpu.branchPred." in childValue or "cpu.dcache." in childValue or "cpu.icache." in childValue or "cpu.workload." in childValue or "cpu.clk_domain" in childValue or "cpu.cpu_voltage_domain" in childValue:
                             childValue = childValue.replace("cpu." , "cpu."+ str(gem5_O3_start_index)+ ".")
                         else:
                             childValue = childValue.replace("cpu." , cpus_name + "."+ str(gem5_O3_start_index)+ ".")
@@ -223,7 +223,7 @@ def prepareTemplate (path):
                                 else:
                                     level2ChildValue = level2ChildValue.replace("cpu." , cpus_name + str(gem5_O3_start_index)+ ".")
                             if isinstance(level2ChildValue, basestring) and "cpu." in level2ChildValue and "config" in level2ChildValue.split('.')[0]:
-                                if "cpu.branchPred." in level2ChildValue or "cpu.dcache." in level2ChildValue or "cpu.icache." in level2ChildValue or "cpu.workload." in level2ChildValue or "cpu.cpu_clk_domain" in level2ChildValue or "cpu.cpu_voltage_domain" in level2ChildValue:
+                                if "cpu.branchPred." in level2ChildValue or "cpu.dcache." in level2ChildValue or "cpu.icache." in level2ChildValue or "cpu.workload." in level2ChildValue or "cpu.clk_domain" in level2ChildValue or "cpu.cpu_voltage_domain" in level2ChildValue:
                                     level2ChildValue = level2ChildValue.replace("cpu." , "cpu." + str(gem5_O3_start_index)+ ".")
                                 else:
                                     level2ChildValue = level2ChildValue.replace("cpu." , cpus_name + "." + str(gem5_O3_start_index)+ ".")
